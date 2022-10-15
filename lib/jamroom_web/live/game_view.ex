@@ -11,9 +11,11 @@ defmodule JamroomWeb.GameView do
     ~L"""
     <div class="">
       <%= JamroomWeb.PageView.render("menu.html", assigns) %>
-      <img src="/images/bg.png" class="game_img" />
-      <%= JamroomWeb.PageView.render("drummer.html", assigns) %>
-      <%= JamroomWeb.PageView.render("guitarist.html", assigns) %>
+      <div class="game-display">
+        <img src="/images/bg.png" class="game_img" />
+        <%= JamroomWeb.PageView.render("drummer.html", assigns) %>
+        <%= JamroomWeb.PageView.render("guitarist.html", assigns) %>
+      </div>
       </div>
     </div>
     """

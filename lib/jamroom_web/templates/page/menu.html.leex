@@ -8,30 +8,42 @@
     Drummer is: <strong><%= @drummer %></strong>
     <br />
 
-    <%# The select/drop Instrument buttons %>
-    <div style="display: grid; grid-template-columns: 110px 110px;">
+    <div class="position-state-message">
+    <%= case position_state(@name, @guitarist, @drummer) do %>
+        <% :is_drummer -> %>
+            <div>You are the drummer!</div>
+        <% :is_guitarist -> %>
+            <div>You are the guitarist!</div>
+        <% :position_available -> %>
+            <div>Choose a position!</div>
+        <% :positions_filled -> %>
+            <div>All positions are full! Enjoy the music!</div>
+    <% end %>
+    </div>
 
+    <%# The select/drop Instrument buttons %>
+    <div class="position-selection-buttons">
         <div>
             <%= if @guitarist == nil do %>
-            <div class="menu-btn" phx-click="select-guitar" style=" z-index: 999; background: green;">
+            <div class="menu-btn position-free" phx-click="select-guitar">
                 Select Guitar
             </div>
             <% end %>
 
             <%= if @guitarist == @name do %>
-            <div class="menu-btn" phx-click="un-select-guitar" style=" z-index: 999; background: red;">
+            <div class="menu-btn position-taken" phx-click="un-select-guitar">
                 Drop Guitar
             </div>
             <% end %>
         </div>
         <div>
             <%= if @drummer == nil do %>
-            <div class="menu-btn" phx-click="select-drum" style="z-index: 999; background: green;     left: 103px;">
+            <div class="menu-btn position-free" phx-click="select-drum">
                 Select Drum
             </div>
             <% end %>
             <%= if @drummer == @name do %>
-            <div class="menu-btn" phx-click="un-select-drum" style="z-index: 999; background: red;">
+            <div class="menu-btn position-taken" phx-click="un-select-drum">
                 Drop Drum
             </div>
             <% end %>
