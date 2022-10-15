@@ -24,13 +24,14 @@ defmodule JamroomWeb.GameView do
     # May need to unsubscribe on termination
     if connected?(socket), do: Phoenix.PubSub.subscribe(Jamroom.InternalPubSub, "game")
 
-    socket = assign(socket,
-      name: get_random_name(),
-      guitarist: Jamroom.Band.guitarist(),
-      strum_guitar: nil,
-      drummer: Jamroom.Band.drummer(),
-      hit_drum: nil
-    )
+    socket =
+      assign(socket,
+        name: get_random_name(),
+        guitarist: Jamroom.Band.guitarist(),
+        strum_guitar: nil,
+        drummer: Jamroom.Band.drummer(),
+        hit_drum: nil
+      )
 
     {:ok, socket}
   end
@@ -64,6 +65,7 @@ defmodule JamroomWeb.GameView do
 
   def handle_event("guitar-keydown", params, socket) do
     %{"key" => key} = params
+
     if Enum.member?(@possible_guitar_chords, key) do
       Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:play_sound, :guitar, key})
 
@@ -101,6 +103,7 @@ defmodule JamroomWeb.GameView do
 
   def handle_event("drum-keydown", params, socket) do
     %{"key" => key} = params
+
     if Enum.member?(@possible_drum_keys, key) do
       Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:play_sound, :drum, key})
 
