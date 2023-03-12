@@ -32,7 +32,7 @@ defmodule Jamroom.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.7.0-rc.2", override: true},
+      {:phoenix, "~> 1.7.0"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.0"},
