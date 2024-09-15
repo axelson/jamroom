@@ -35,7 +35,6 @@ defmodule Jamroom.MixProject do
       {:phoenix, "~> 1.7.0"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_dashboard, "~> 0.7.2"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -44,7 +43,9 @@ defmodule Jamroom.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:phoenix_live_view, "~> 0.18.3"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.5 or ~> 1.0"}
+      {:telemetry_poller, "~> 0.5 or ~> 1.0"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.7", only: :dev},
     ]
   end
 
@@ -56,9 +57,14 @@ defmodule Jamroom.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      setup: ["deps.get", "assets.setup", "assets.build"],
+      "assets.setup": ["esbuild.install --if-missing"],
+      "assets.build": ["esbuild default"],
+      "assets.deploy": [
+        "esbuild default --minify",
+        "sass default --no-source-map --style=compressed",
+        "phx.digest"
+      ]
     ]
   end
 end
