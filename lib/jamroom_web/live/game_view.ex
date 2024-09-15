@@ -52,17 +52,13 @@ defmodule JamroomWeb.GameView do
 
   @impl Phoenix.LiveView
   def handle_event("select-guitar", _value, socket) do
-    old_guitarist = Jamroom.Band.guitarist()
+    _old_guitarist = Jamroom.Band.guitarist()
 
     maybe_new_guitarist = socket.assigns.name
 
-    with idk <- Jamroom.Band.add_at(0, maybe_new_guitarist) do
-      Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:update_game_state})
-      {:noreply, assign(socket, guitarist: maybe_new_guitarist, strum_guitar: nil)}
-    else
-      err ->
-        {:noreply, socket}
-    end
+    Jamroom.Band.add_at(0, maybe_new_guitarist)
+    Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:update_game_state})
+    {:noreply, assign(socket, guitarist: maybe_new_guitarist, strum_guitar: nil)}
   end
 
   def handle_event("guitar-keydown", params, socket) do
@@ -90,17 +86,13 @@ defmodule JamroomWeb.GameView do
   end
 
   def handle_event("select-drum", _value, socket) do
-    old_drummer = Jamroom.Band.drummer()
+    _old_drummer = Jamroom.Band.drummer()
 
     maybe_new_drummer = socket.assigns.name
 
-    with idk <- Jamroom.Band.add_at(1, maybe_new_drummer) do
-      Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:update_game_state})
-      {:noreply, assign(socket, hit_drum: nil)}
-    else
-      err ->
-        {:noreply, socket}
-    end
+    Jamroom.Band.add_at(1, maybe_new_drummer)
+    Phoenix.PubSub.broadcast(Jamroom.InternalPubSub, "game", {:update_game_state})
+    {:noreply, assign(socket, hit_drum: nil)}
   end
 
   def handle_event("drum-keydown", params, socket) do

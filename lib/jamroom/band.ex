@@ -1,7 +1,7 @@
 defmodule Jamroom.Band do
   use GenServer
 
-  def start_link(opts) do
+  def start_link(_opts) do
     GenServer.start_link(__MODULE__, [nil, nil, nil, nil, nil], name: __MODULE__)
   end
 
