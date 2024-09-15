@@ -8,14 +8,13 @@ defmodule JamroomWeb.GameView do
 
   @impl Phoenix.LiveView
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div class="">
       <%= JamroomWeb.PageView.render("menu.html", assigns) %>
       <div class="game-display">
         <img src="/images/bg.png" class="game_img" />
         <%= JamroomWeb.PageView.render("drummer.html", assigns) %>
         <%= JamroomWeb.PageView.render("guitarist.html", assigns) %>
-      </div>
       </div>
     </div>
     """

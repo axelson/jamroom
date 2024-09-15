@@ -20,9 +20,9 @@ defmodule JamroomWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: JamroomWeb
+      use Gettext, backend: JamroomWeb.Gettext
 
       import Plug.Conn
-      import JamroomWeb.Gettext
       alias JamroomWeb.Router.Helpers, as: Routes
     end
   end
@@ -37,10 +37,13 @@ defmodule JamroomWeb do
       import Phoenix.Controller, only: [view_module: 1]
 
       # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
+      import Phoenix.HTML
+      import Phoenix.HTML.Form
+      use PhoenixHTMLHelpers
+
+      use Gettext, backend: JamroomWeb.Gettext
 
       import JamroomWeb.ErrorHelpers
-      import JamroomWeb.Gettext
       alias JamroomWeb.Router.Helpers, as: Routes
       import Phoenix.Component
     end
@@ -58,7 +61,7 @@ defmodule JamroomWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import JamroomWeb.Gettext
+      use Gettext, backend: JamroomWeb.Gettext
     end
   end
 
